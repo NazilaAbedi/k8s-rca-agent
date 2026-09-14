@@ -2,20 +2,20 @@
 
 COMMAND="$1"
 
-FORBIDDEN_COMMANDS=(
-"delete"
-"apply"
-"patch"
-"edit"
-"scale"
+FORBIDDEN_OPERATIONS=(
+  "kubectl delete"
+  "kubectl apply"
+  "kubectl patch"
+  "kubectl edit"
+  "kubectl scale"
 )
 
-for CMD in "${FORBIDDEN_COMMANDS[@]}"
+for OPERATION in "${FORBIDDEN_OPERATIONS[@]}"
 do
-    if [[ "$COMMAND" == *"$CMD"* ]]; then
-        echo "BLOCKED: unsafe Kubernetes operation detected"
-        exit 1
-    fi
+  if [[ "$COMMAND" == *"$OPERATION"* ]]; then
+    echo "BLOCKED: Kubernetes mutation operation is not allowed in RCA mode"
+    exit 1
+  fi
 done
 
 exit 0

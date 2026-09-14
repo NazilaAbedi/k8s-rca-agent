@@ -1,24 +1,36 @@
-# Kubernetes RCA Workflow
+# Kubernetes RCA Skill
 
 
-## Goal
+## Purpose
 
-Find root cause of a broken namespace.
-
-
-## Step 1: Check Pods
-
-Use Kubernetes MCP.
-
-Tool:
-
-kubectl_get
+This skill defines the standard workflow for Kubernetes Root Cause Analysis.
 
 
-Arguments:
+## Workflow
 
-resourceType: pods
-namespace: target namespace
+
+## 1. Namespace Discovery
+
+Identify the target namespace.
+
+Understand:
+
+- workloads
+- services
+- dependencies
+
+
+## 2. Pod Investigation
+
+Inspect pods.
+
+Analyze:
+
+- status
+- restart count
+- container state
+- readiness
+- failures
 
 
 Look for:
@@ -29,60 +41,79 @@ Look for:
 - OOMKilled
 
 
-## Step 2: Check Events
+## 3. Event Analysis
 
-Use:
-
-kubectl_get
-
-resourceType:
-events
-
+Inspect Kubernetes events.
 
 Look for:
 
 - scheduling failures
-- image errors
+- image pull problems
 - probe failures
+- volume issues
+- resource limitations
 
 
-## Step 3: Describe Resources
+## 4. Resource Description
 
 Inspect unhealthy resources.
 
+Analyze:
+
+- environment variables
+- probes
+- resource limits
+- container configuration
+
+
+## 5. Log Investigation
+
+Analyze application logs.
+
+Look for:
+
+- startup failures
+- exceptions
+- dependency failures
+- configuration errors
+
+
+## 6. Deployment Analysis
+
+Review:
+
+- container images
+- configuration
+- environment variables
+- resource requests/limits
+
+
+## 7. Service Investigation
+
 Check:
 
-- container state
-- restart count
-- environment
-- probes
-
-
-## Step 4: Check Logs
-
-Find application errors.
-
-
-## Step 5: Check Deployment
-
-Inspect:
-
-- image
-- env
-- resources
-
-
-## Step 6: Check Services
-
-Inspect:
-
+- services
 - selectors
 - endpoints
+- connectivity
 
 
-## Step 7: Create RCA
+## 8. Metrics Correlation
 
-Return:
+When metrics are available analyze:
+
+- CPU usage
+- Memory usage
+- Error rate
+- Latency
+
+
+## 9. Root Cause Generation
+
+Only generate conclusions after evidence collection.
+
+
+The final answer must contain:
 
 ROOT CAUSE:
 
@@ -91,3 +122,6 @@ EVIDENCE:
 CONFIDENCE:
 
 PROPOSED PATCH:
+
+
+Never apply fixes.

@@ -19,6 +19,14 @@ The agent must never execute:
 - kubectl scale
 
 
+The agent must never:
+
+- modify deployments
+- restart workloads
+- change configurations
+- create resources
+
+
 ## Secret Protection
 
 The agent must never:
@@ -40,7 +48,7 @@ Every root cause conclusion must include evidence.
 
 If evidence is incomplete:
 
-CONFIDENCE must be set to:
+CONFIDENCE must be:
 
 low
 
@@ -53,7 +61,9 @@ The agent may:
 - suggest remediation
 - provide YAML examples
 
+
 The agent must not:
 
 - apply fixes
 - execute remediation commands
+- modify cluster state
