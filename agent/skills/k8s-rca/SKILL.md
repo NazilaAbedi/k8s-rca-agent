@@ -3,37 +3,56 @@
 
 ## Purpose
 
-This skill defines the standard workflow for Kubernetes Root Cause Analysis.
+Investigate Kubernetes namespace failures using read-only Kubernetes MCP tools.
+
+The goal is to identify the root cause based on collected evidence.
 
 
-## Workflow
+## Allowed MCP Tools
+
+The agent may use only:
+
+- kubectl_get
+- kubectl_describe
+- kubectl_logs
 
 
-## 1. Namespace Discovery
+The agent must not use:
 
-Identify the target namespace.
+- kubectl_apply
+- kubectl_delete
+- kubectl_create
+- kubectl_patch
+- kubectl_scale
+- kubectl_rollout
+- exec_in_pod
 
-Understand:
 
-- workloads
-- services
-- dependencies
+## Investigation Workflow
 
 
-## 2. Pod Investigation
+## 1. Inspect Pods
 
-Inspect pods.
+Use:
+
+kubectl_get
+
+
+Parameters:
+
+resourceType: pods
+
+namespace: target namespace
+
 
 Analyze:
 
-- status
+- pod status
 - restart count
 - container state
-- readiness
-- failures
 
 
-Look for:
+Identify:
 
 - CrashLoopBackOff
 - ImagePullBackOff
@@ -41,79 +60,118 @@ Look for:
 - OOMKilled
 
 
-## 3. Event Analysis
+---
 
-Inspect Kubernetes events.
+## 2. Inspect Kubernetes Events
+
+Use:
+
+kubectl_get
+
+
+Parameters:
+
+resourceType: events
+
+namespace: target namespace
+
 
 Look for:
 
 - scheduling failures
-- image pull problems
+- image pull failures
 - probe failures
-- volume issues
-- resource limitations
+- volume problems
 
 
-## 4. Resource Description
+---
 
-Inspect unhealthy resources.
+## 3. Describe Failed Resources
 
-Analyze:
+Use:
 
+kubectl_describe
+
+
+Inspect:
+
+- container state
+- failure reason
 - environment variables
 - probes
 - resource limits
-- container configuration
 
 
-## 5. Log Investigation
+---
 
-Analyze application logs.
+## 4. Inspect Logs
+
+Use:
+
+kubectl_logs
+
+
+For crashed containers:
+
+previous: true
+
 
 Look for:
 
-- startup failures
-- exceptions
-- dependency failures
+- application crashes
 - configuration errors
+- dependency failures
 
 
-## 6. Deployment Analysis
+---
 
-Review:
+## 5. Inspect Configuration
 
-- container images
-- configuration
+Use:
+
+kubectl_get
+
+
+Inspect:
+
+- deployments
+- services
+- configmaps
+
+
+Analyze:
+
+- container image
 - environment variables
-- resource requests/limits
+- replicas
+- resources
 
 
-## 7. Service Investigation
+---
 
-Check:
+## 6. Service Investigation
+
+Inspect:
 
 - services
-- selectors
 - endpoints
-- connectivity
 
 
-## 8. Metrics Correlation
+Identify:
 
-When metrics are available analyze:
-
-- CPU usage
-- Memory usage
-- Error rate
-- Latency
+- missing selectors
+- unavailable backends
 
 
-## 9. Root Cause Generation
+---
 
-Only generate conclusions after evidence collection.
+## 7. Root Cause Analysis
+
+Do not conclude without evidence.
 
 
-The final answer must contain:
+Final response must contain:
+
 
 ROOT CAUSE:
 
@@ -124,4 +182,4 @@ CONFIDENCE:
 PROPOSED PATCH:
 
 
-Never apply fixes.
+Never apply remediation.
