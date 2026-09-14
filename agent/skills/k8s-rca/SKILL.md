@@ -1,18 +1,25 @@
-# Kubernetes RCA Skill
+# Kubernetes RCA Workflow
 
 
-## Purpose
+## Goal
 
-This skill defines the investigation workflow
-for Kubernetes Root Cause Analysis.
-
-
-## Investigation Workflow
+Find root cause of a broken namespace.
 
 
-### Step 1: Inspect Pods
+## Step 1: Check Pods
 
-Start by checking pod status.
+Use Kubernetes MCP.
+
+Tool:
+
+kubectl_get
+
+
+Arguments:
+
+resourceType: pods
+namespace: target namespace
+
 
 Look for:
 
@@ -20,139 +27,62 @@ Look for:
 - ImagePullBackOff
 - Pending
 - OOMKilled
-- Failed containers
 
 
-Goal:
+## Step 2: Check Events
 
-Identify unhealthy workloads.
+Use:
 
+kubectl_get
 
----
+resourceType:
+events
 
-
-### Step 2: Inspect Kubernetes Events
-
-Check namespace events.
 
 Look for:
 
 - scheduling failures
-- image pull errors
-- failed mounts
+- image errors
 - probe failures
-- resource issues
 
 
-Goal:
+## Step 3: Describe Resources
 
-Find Kubernetes-level evidence.
+Inspect unhealthy resources.
+
+Check:
+
+- container state
+- restart count
+- environment
+- probes
 
 
----
+## Step 4: Check Logs
+
+Find application errors.
 
 
-### Step 3: Describe Resources
-
-Describe unhealthy resources.
+## Step 5: Check Deployment
 
 Inspect:
 
-- container states
-- environment variables
-- restart count
-- probes
-- resource limits
-
-
-Goal:
-
-Understand why the workload failed.
-
-
----
-
-
-### Step 4: Inspect Previous Logs
-
-Check previous container logs.
-
-Look for:
-
-- application crashes
-- configuration errors
-- dependency failures
-
-
-Goal:
-
-Find application-level evidence.
-
-
----
-
-
-### Step 5: Inspect Deployment Configuration
-
-Review:
-
-- container image
-- environment configuration
-- probes
+- image
+- env
 - resources
 
 
-Goal:
+## Step 6: Check Services
 
-Find configuration problems.
+Inspect:
 
-
----
-
-
-### Step 6: Inspect Services and Endpoints
-
-Check:
-
-- service selectors
-- endpoint availability
-- connectivity issues
+- selectors
+- endpoints
 
 
-Goal:
+## Step 7: Create RCA
 
-Detect networking problems.
-
-
----
-
-
-### Step 7: Analyze Metrics
-
-Use metrics when required.
-
-Check:
-
-- CPU usage
-- Memory usage
-- Error rate
-- Latency
-
-
-Goal:
-
-Correlate failures with resource behavior.
-
-
----
-
-
-### Step 8: Generate Root Cause
-
-Create a conclusion only after evidence collection.
-
-
-Output:
+Return:
 
 ROOT CAUSE:
 
@@ -161,6 +91,3 @@ EVIDENCE:
 CONFIDENCE:
 
 PROPOSED PATCH:
-
-
-Never apply the proposed patch.

@@ -1,25 +1,22 @@
-# RCA Investigation Request
+# RCA Request
 
 
-Investigate the following Kubernetes namespace:
+Analyze this Kubernetes namespace:
 
-Namespace:
 {{NAMESPACE}}
 
 
-Task:
-
-Find the root cause of the failure.
-
+Find the root cause.
 
 Requirements:
 
-- Collect evidence before conclusion.
-- Do not modify cluster resources.
+- Use Kubernetes MCP tools.
+- Collect evidence first.
+- Do not modify anything.
 - Do not expose secrets.
 
 
-Follow the Kubernetes RCA workflow.
+Follow RCA workflow.
 
 
 Return:
