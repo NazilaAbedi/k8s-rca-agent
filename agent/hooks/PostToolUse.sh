@@ -1,6 +1,7 @@
 #!/bin/bash
 
-echo "Checking output"
+OUTPUT="$1"
 
-exit 0
-
+echo "$OUTPUT" | \
+sed -E \
+'s/(password|PASSWORD|token|TOKEN|secret|SECRET)=([^ ]+)/\1=REDACTED/g'
