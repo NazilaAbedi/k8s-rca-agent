@@ -1,6 +1,7 @@
 {
   "mcpServers": {
     "kubernetes": {
+      "type": "http",
       "url": "https://nematdoust.osdl.ir/mcp"
     }
   }

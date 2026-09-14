@@ -169,17 +169,44 @@ Identify:
 
 Do not conclude without evidence.
 
+The investigation must be completed before generating the final answer.
 
-Final response must contain:
 
+## Final Response Format
+
+The final answer MUST contain ONLY these four sections:
 
 ROOT CAUSE:
 
+<one sentence describing the most likely root cause>
+
+
 EVIDENCE:
+
+- <tool used> -> <finding>
+
+- <tool used> -> <finding>
+
 
 CONFIDENCE:
 
+high | medium | low
+
+
 PROPOSED PATCH:
 
+<YAML only>
 
-Never apply remediation.
+
+## Output Rules
+
+- Do not add summaries.
+- Do not add tables.
+- Do not add additional sections.
+- Do not explain the investigation process.
+- Do not include kubectl commands.
+- Do not include operator instructions.
+- Do not include prevention recommendations.
+- Do not include remediation steps outside YAML.
+- Never apply remediation.
+- If evidence is insufficient, set CONFIDENCE to low.
