@@ -12,6 +12,8 @@ Investigate the Kubernetes namespace above.
 
 Find the root cause of the failure and propose a safe remediation.
 
+if we have more than one mistake in hour pods you must show and handle all of them , i meanyou should find mistaken pods all over cluster.
+
 
 ## Investigation Rules
 
