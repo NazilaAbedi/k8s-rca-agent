@@ -1,5 +1,0 @@
-{
-  "name": "kubernetes-rca-agent",
-  "description": "A read-only Kubernetes Root Cause Analysis Agent",
-  "version": "1.0.0"
-}

@@ -77,21 +77,16 @@ Never:
 
 ## RCA Output Format
 
-Always return:
-
+The final response must strictly contain ONLY these sections:
 
 ROOT CAUSE:
 
-Explain the most likely cause.
+<one sentence>
 
 
 EVIDENCE:
 
-Provide supporting observations.
-
-Format:
-
-- observation -> source
+- <tool used> -> <finding>
 
 
 CONFIDENCE:
@@ -101,6 +96,15 @@ high | medium | low
 
 PROPOSED PATCH:
 
-Provide a safe remediation example.
+<YAML only>
 
-Never apply the patch.
+
+Do not add:
+- summaries
+- tables
+- explanations
+- investigation steps
+- operator instructions
+- prevention recommendations
+
+Never apply remediation.
